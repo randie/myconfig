@@ -24,7 +24,7 @@ brew_install_packages() {
         fi
     fi
 
-    b=$MYCONFIG/Brewfile
+    b=$MYCONFIG/.Brewfile
     if [[ ! -e $b ]]
     then
         echo "ERROR! $(pwd)/$b is missing"
@@ -56,7 +56,7 @@ backup_existing_config() {
         ( mkdir -p $TMPDIR && cd $TMPDIR && git clone $GITHUB_REPO )
     fi
 
-    ( cd $MYCONFIG; git ls-tree --full-tree -r --name-only HEAD ) > $MYCONFIG-files.txt
+    ( cd $MYCONFIG; git ls-tree --full-tree -r --name-only HEAD | grep -v README ) > $MYCONFIG-files.txt
     
     (
         cd $HOMEDIR
