@@ -16,4 +16,4 @@ rm -rf /tmp/scratch
 
 NOTES:
 
-1. Config files that were replaced are backed up in /tmp/scratch/myconfig-backup-2212270436.tar
+1. Config files that were replaced are backed up in /tmp/scratch/myconfig-backup-<timestamp>.tar
