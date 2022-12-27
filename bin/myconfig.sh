@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 NOW=$(date +%y%m%d%H%M) 
-MYCONFIG=sandbox
+MYCONFIG=myconfig
 ORIGDIR=$(pwd)
-HOMEDIR=$(echo ~/tmp/home2)
+HOMEDIR=$(echo ~/tmp/home)
 GITHUB_REPO="git@github.com:randie/$MYCONFIG.git"
 BARE_REPO="$HOMEDIR/${MYCONFIG}-bare"
 
@@ -56,7 +56,6 @@ backup_existing_config() {
         ( mkdir -p $TMPDIR && cd $TMPDIR && git clone $GITHUB_REPO )
     fi
 
-    #find $MYCONFIG -type f | grep -vw '.git' | sed s:$MYCONFIG/:: > $MYCONFIG-files.txt
     ( cd $MYCONFIG; git ls-tree --full-tree -r --name-only HEAD ) > $MYCONFIG-files.txt
     
     (
