@@ -47,26 +47,28 @@ create_bare_repo() {
 #
 # back up existing config files that will be replaced
 #
-backup_existing_config() {
+backup_existing_config() {(
+    echo ">>> 0 $(pwd)"
     if [[ -d ./$MYCONFIG/.git ]]
     then
         TMPDIR=$(pwd)
     else
         TMPDIR=$HOMEDIR/__tmp$NOW
-        ( mkdir -p $TMPDIR && cd $TMPDIR && git clone $GITHUB_REPO )
+        mkdir -p $TMPDIR && cd $TMPDIR
+        git clone $GITHUB_REPO
     fi
 
-    ( cd $MYCONFIG; git ls-tree --full-tree -r --name-only HEAD | grep -v README ) > $MYCONFIG-files.txt
+    cd $MYCONFIG
+    git ls-tree --full-tree -r --name-only HEAD | grep -v README > ../$MYCONFIG-files.txt
     
-    (
-        cd $HOMEDIR
-        tar cf $TMPDIR/$MYCONFIG-backup-$NOW.tar -T $TMPDIR/$MYCONFIG-files.txt
-        for f in $(< $TMPDIR/$MYCONFIG-files.txt)
-        do
-            [[ -e $f ]] && rm -f $f
-        done
-    )
-}
+    cd $HOMEDIR
+    tar cf $TMPDIR/$MYCONFIG-backup-$NOW.tar -T $TMPDIR/$MYCONFIG-files.txt
+    for f in $(< $TMPDIR/$MYCONFIG-files.txt)
+    do
+        [[ -e $f ]] && rm -f $f
+    done
+    echo ">>> 2 $(pwd)"
+)}
 
 
 #=======================#
@@ -78,6 +80,7 @@ backup_existing_config() {
 brew_install_packages
 create_bare_repo
 backup_existing_config
+echo ">>> 3 $(pwd)"
 
 # apply your configuration
 cd $HOMEDIR
