@@ -2,21 +2,17 @@
 
 NOW=$(date +%y%m%d%H%M) 
 MYCONFIG=myconfig
-ORIGDIR=$(pwd)
-HOMEDIR=$(echo ~/tmp/home)
 GITHUB_REPO="git@github.com:randie/$MYCONFIG.git"
-BARE_REPO="$HOMEDIR/${MYCONFIG}-bare"
+BARE_REPO="$HOME/${MYCONFIG}-bare"
 
 
 #
 # install packages and apps with homebrew
 #
 brew_install_packages() {
-    if [[ -x /usr/local/Homebrew/bin/brew ]]
+    if [[ ! -x /usr/local/Homebrew/bin/brew ]]
     then
-        echo "brew update"
-    else
-        echo "curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh"
+        curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
         if [[ $? -ne 0 ]]
         then
             echo 'ERROR! Unable to install homebrew ¯\_(ツ)_/¯'
@@ -31,8 +27,12 @@ brew_install_packages() {
         exit 2
     fi
     
-    # TODO: install packages one by one, checking first if they exist already
-    echo "brew bundle install --file=$b"
+    brew bundle install --file=$b
+    if [[ $? -ne 0 ]]
+    then
+        echo 'ERROR! brew bundle install did not complete successfully'
+        exit 3
+    fi
 }
 
 
@@ -48,12 +48,13 @@ create_bare_repo() {
 # back up existing config files that will be replaced
 #
 backup_existing_config() {(
-    echo ">>> 0 $(pwd)"
+    # NOTE: The parens surrounding this function is to confine its cd's locally
+
     if [[ -d ./$MYCONFIG/.git ]]
     then
         TMPDIR=$(pwd)
     else
-        TMPDIR=$HOMEDIR/__tmp$NOW
+        TMPDIR=$HOME/__tmp$NOW
         mkdir -p $TMPDIR && cd $TMPDIR
         git clone $GITHUB_REPO
     fi
@@ -61,13 +62,12 @@ backup_existing_config() {(
     cd $MYCONFIG
     git ls-tree --full-tree -r --name-only HEAD | grep -v README > ../$MYCONFIG-files.txt
     
-    cd $HOMEDIR
+    cd $HOME
     tar cf $TMPDIR/$MYCONFIG-backup-$NOW.tar -T $TMPDIR/$MYCONFIG-files.txt
     for f in $(< $TMPDIR/$MYCONFIG-files.txt)
     do
         [[ -e $f ]] && rm -f $f
     done
-    echo ">>> 2 $(pwd)"
 )}
 
 
@@ -77,19 +77,18 @@ backup_existing_config() {(
 #                       #
 #=======================#
 
-brew_install_packages
+#brew_install_packages
 create_bare_repo
 backup_existing_config
-echo ">>> 3 $(pwd)"
 
 # apply your configuration
-cd $HOMEDIR
-git --git-dir=$BARE_REPO --work-tree=$HOMEDIR config --local status.showUntrackedFiles no
-git --git-dir=$BARE_REPO --work-tree=$HOMEDIR checkout
+cd $HOME
+git --git-dir=$BARE_REPO --work-tree=$HOME config --local status.showUntrackedFiles no
+git --git-dir=$BARE_REPO --work-tree=$HOME checkout
 
 
 # wrap up
-ALIAS_C="alias c=\"git --no-pager --git-dir=$BARE_REPO --work-tree=$HOMEDIR\""
+ALIAS_C="alias c=\"git --no-pager --git-dir=$BARE_REPO --work-tree=$HOME\""
 echo
 echo "We're done!"
 echo
