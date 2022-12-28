@@ -123,6 +123,7 @@ alias d='dirs -v'
 alias dirs='dirs -v'
 alias h=history
 alias killdock='killall -KILL Dock'
+alias lsa='ls -a'
 alias mv='mv -i'
 alias rm='rm -i'
 #alias shred='srm -rv'
@@ -133,12 +134,17 @@ alias shred='rm -P'
 alias g='git --no-pager'
 alias gs='git status -s'
 alias gm='git merge --no-commit --no-ff'
-alias gitalias='alias | grep git | grep'
+alias gita='alias | grep git | grep'
 alias glol='git --no-pager log --graph --pretty='\''%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset'\'
 #
 # myconfig aliases
 #
-alias c="git --no-pager --git-dir=/Users/randie/myconfig-bare --work-tree=/Users/randie"
+alias c='git --no-pager --git-dir=/Users/randie/myconfig-bare --work-tree=/Users/randie'
+alias cad='git --no-pager --git-dir=/Users/randie/myconfig-bare --work-tree=/Users/randie add'
+alias cpu='git --no-pager --git-dir=/Users/randie/myconfig-bare --work-tree=/Users/randie push'
+alias cs='git --no-pager --git-dir=/Users/randie/myconfig-bare --work-tree=/Users/randie status -s'
+alias clo='git --no-pager --git-dir=/Users/randie/myconfig-bare --work-tree=/Users/randie log --oneline --decorate'
+alias clog='git --no-pager --git-dir=/Users/randie/myconfig-bare --work-tree=/Users/randie log --oneline --decorate --graph'
 alias clol='git --no-pager --git-dir=/Users/randie/myconfig-bare --work-tree=/Users/randie log --graph --pretty='\''%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset'\'
 
 #
