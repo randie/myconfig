@@ -1,23 +1,26 @@
-#!/usr/local/bin/zsh
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
 
-echo "# $HOME/.zshrc"
-
-# Fix directory permission issue (https://github.com/ohmyzsh/ohmyzsh/issues/6835)
-ZSH_DISABLE_COMPFIX=true 
+# If you come from bash you might have to change your $PATH.
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH=~/.oh-my-zsh
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
+# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 # ZSH_THEME="robbyrussell"
-ZSH_THEME=yodalicious
+ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in ~/.oh-my-zsh/themes/
+# a theme from this variable instead of looking in $ZSH/themes/
 # If set to an empty array, this variable will have no effect.
 # ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
 
@@ -28,11 +31,16 @@ ZSH_THEME=yodalicious
 # Case-sensitive completion must be off. _ and - will be interchangeable.
 # HYPHEN_INSENSITIVE="true"
 
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
+# Uncomment one of the following lines to change the auto-update behavior
+# zstyle ':omz:update' mode disabled  # disable automatic updates
+# zstyle ':omz:update' mode auto      # update automatically without asking
+# zstyle ':omz:update' mode reminder  # just remind me to update when it's time
 
 # Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
+# zstyle ':omz:update' frequency 13
+
+# Uncomment the following line if pasting URLs and other text is messed up.
+# DISABLE_MAGIC_FUNCTIONS="true"
 
 # Uncomment the following line to disable colors in ls.
 # DISABLE_LS_COLORS="true"
@@ -44,6 +52,9 @@ ZSH_THEME=yodalicious
 # ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
+# You can also set it to another string to have that shown instead of the default red dots.
+# e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
+# Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
 # COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
@@ -63,29 +74,20 @@ ZSH_THEME=yodalicious
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
 # Which plugins would you like to load?
-# Standard plugins can be found in ~/.oh-my-zsh/plugins/*
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Standard plugins can be found in $ZSH/plugins/
+# Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-#plugins=(autojump git vi-mode zsh-autosuggestions zsh-syntax-highlighting)
-plugins=(autojump git vi-mode)
-
-# run autojump
-[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
+#plugins=(autojump git zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(autojump git zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
-#--------------------
-# User configuration
-#--------------------
-
-#export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-#export LANG=en_US.UTF-8
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
+#==========================#
+#                          #
+#    User configuration    #
+#                          #
+#==========================#
 
 set -o allexport
 
@@ -95,188 +97,65 @@ then
     HOSTNAME=$(scutil --get LocalHostName)
 else
     HOSTNAME=$(uname -n)
-fi
+fi 
 
 # Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]
-then
-    export EDITOR='vim'
-else
-    export EDITOR='mvim'
-fi
+[[ -n $SSH_CONNECTION ]] && EDITOR=vim || EDITOR=mvim
 VISUAL=$EDITOR
 FCEDIT=$EDITOR
-PAGER=less
+PAGER=less 
 
-#--
-#   shell  options
-#
-setopt vi
-setopt NOCLOBBER
-setopt RM_STAR_WAIT
+# Compilation flags
+# ARCHFLAGS="-arch x86_64"
 
-#--
-#   history shell options
-#
-HISTIGNORE="&:ls:[bf]g:exit:reset:clear:cd:cd ..:cd.."
-#HISTSIZE=25000
-#HISTFILE=~/.zsh_history
-#SAVEHIST=10000
-#INC_APPEND_HISTORY
-setopt HIST_IGNORE_ALL_DUPS
-setopt HIST_IGNORE_SPACE
-setopt HIST_REDUCE_BLANKS
-setopt HIST_VERIFY
-
-# my shell functions
-fpath=( ~/bin/my-functions "${fpath[@]}" )
-autoload -Uz $fpath[1]/*(.:t)
-
-#--
-#   Environments to set
-#   e.g. ENVS="node mamp sublime cvs ruby javascript"
-#   TODO: Use arrays
-#
-ENVS="javascript node cvs anaconda"
-javascript=$(echo $ENVS | grep -wc javascript)
-node=$(echo $ENVS | grep -wc node)
-ruby=$(echo $ENVS | grep -wc ruby)
-cvs=$(echo $ENVS | grep -wc cvs)
-anaconda=$(echo $ENVS | grep -wc anaconda)
-
-#--
-#   CVS
-#
-if (( cvs > 0 ))
-then
-  CVSROOT=$HOME/cvsroot
-  CVSIGNORE=".git .idea .DS_Store node_modules bower_components log vendor tmp"
-fi
-
-#--
-#  JAVASCRIPT
-#
-if (( javascript > 0 ))
-then
-  # JavaScript REPL in OSX (jsc)
-  PATH=${PATH}:/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Resources
-fi
-
-#--
-#   RUBY
-#
-if (( ruby > 0 ))
-then
-  PATH=${PATH}:${HOME}/.rbenv/bin
-fi
-
-#--
-#   NODE
-#
-if (( node > 0 ))
-then
-  NVM_DIR="$HOME/.nvm"
-  # . $(brew --prefix nvm)/nvm.sh
-  [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
-  [ -s "/usr/local/opt/nvm/etc/bash_completion" ] && . "/usr/local/opt/nvm/etc/bash_completion"  # This loads nvm bash_completion
-  PATH=./node_modules/.bin:${PATH}
-fi
-
-#--
-#   ANACONDA
-#
-if (( anaconda > 0 ))
-then
-  PATH=/opt/anaconda3/bin:/opt/anaconda3/condabin:${PATH}
-fi
-
-#--
-#   Finally, my bin
-#
-PATH=${PATH}:$HOME/bin:.
-
-#--
-#   Clean paths (remove duplicate paths)
-#
-#PATH=$(echo $PATH | $HOME/bin/cleanpath)
-
-#--
-#   Convenience env vars
-#
-[ -z $sl ] && sl=$HOME/save-local/$(date +%y%m%d)  
-[ -d $sl ] || mkdir -p $sl
+# MANPATH="/usr/local/man:$MANPATH"
+# LANG=en_US.UTF-8
+PATH=$PATH:$HOME/bin
 
 set +o allexport
 
-# remove duplicates from these paths
-# TODO: Is cleanpath still needed?
-typeset -U path cdpath fpath manpath
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
 #
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-
-#--
-#   Aliases
+# aliases
 #
 alias a=alias
-alias rm='rm -i'
-alias mv='mv -i'
 alias cp='cp -i'
-alias dirs='dirs -v'
 alias d='dirs -v'
+alias dirs='dirs -v'
 alias h=history
 alias killdock='killall -KILL Dock'
+alias mv='mv -i'
+alias rm='rm -i'
 #alias shred='srm -rv'
 alias shred='rm -P'
 #
 # git aliases
 #
-alias gnp='git --no-pager'
+alias g='git --no-pager'
 alias gs='git status -s'
-alias gcd='git checkout upstream/dmz'
-alias gpud='git pull upstream dmz'
-alias gfud='git fetch upstream dmz'
-alias gmud='git merge --no-commit --no-ff upstream/dmz'
-alias gpum='git pull upstream master'
-alias gfu='git fetch upstream'
-alias gmum='git merge --no-commit --no-ff upstream/master'
-alias gpo='git push origin'
-alias agit='alias | grep git | grep'
-alias gcd='git checkout dmz'
-alias gpud='git pull upstream dmz'
-alias gitm='git status -s | grep -w M | sort -u | cut -d " " -f3'
-alias gitmsave='git status -s | grep -w M | sort -u | cut -d " " -f3 | xargs save'
+alias gm='git merge --no-commit --no-ff'
+alias gitalias='alias | grep git | grep'
+alias glol='git --no-pager log --graph --pretty='\''%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset'\'
 #
-# docker aliases
+# myconfig aliases
 #
-alias drmi="docker rmi \$(docker images -aq)"
-alias dc="docker-compose"
-#
-# ember aliases
-#
-alias es="ember server"
-alias eg="ember generate"
-alias et="ember test"
-alias etf="ember test -filter"
+alias c="git --no-pager --git-dir=/Users/randie/myconfig-bare --work-tree=/Users/randie"
+alias clol='git --no-pager --git-dir=/Users/randie/myconfig-bare --work-tree=/Users/randie log --graph --pretty='\''%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset'\'
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/opt/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/opt/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/opt/anaconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/opt/anaconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
+#
+# shell options
+#
+#set -o vi
+setopt vi
+setopt NOCLOBBER
+setopt RM_STAR_WAIT
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_REDUCE_BLANKS
+setopt HIST_VERIFY 
 
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# Activate autojump (an iterm2 plugin)
+[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
+ 
