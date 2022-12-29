@@ -91,21 +91,16 @@ source $ZSH/oh-my-zsh.sh
 
 set -o allexport
 
-# Local hostname
-if [[ $(uname -s) == Darwin ]]
-then
-    HOSTNAME=$(scutil --get LocalHostName)
-else
-    HOSTNAME=$(uname -n)
-fi 
+# local hostname
+[[ $(uname -s) == Darwin ]] && HOSTNAME=$(scutil --get LocalHostName) || HOSTNAME=$(uname -n)
 
-# Preferred editor for local and remote sessions
+# preferred editor for local and remote sessions
 [[ -n $SSH_CONNECTION ]] && EDITOR=vim || EDITOR=mvim
 VISUAL=$EDITOR
 FCEDIT=$EDITOR
 PAGER=less 
 
-# Compilation flags
+# compilation flags
 # ARCHFLAGS="-arch x86_64"
 
 # MANPATH="/usr/local/man:$MANPATH"
@@ -140,9 +135,9 @@ alias glol='git --no-pager log --graph --pretty='\''%Cred%h%Creset -%C(auto)%d%C
 # myconfig aliases
 #
 alias c='git --no-pager --git-dir=/Users/randie/myconfig-bare --work-tree=/Users/randie'
+alias cs='git --no-pager --git-dir=/Users/randie/myconfig-bare --work-tree=/Users/randie status -s'
 alias cad='git --no-pager --git-dir=/Users/randie/myconfig-bare --work-tree=/Users/randie add'
 alias cpu='git --no-pager --git-dir=/Users/randie/myconfig-bare --work-tree=/Users/randie push'
-alias cs='git --no-pager --git-dir=/Users/randie/myconfig-bare --work-tree=/Users/randie status -s'
 alias clo='git --no-pager --git-dir=/Users/randie/myconfig-bare --work-tree=/Users/randie log --oneline --decorate'
 alias clog='git --no-pager --git-dir=/Users/randie/myconfig-bare --work-tree=/Users/randie log --oneline --decorate --graph'
 alias clol='git --no-pager --git-dir=/Users/randie/myconfig-bare --work-tree=/Users/randie log --graph --pretty='\''%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset'\'
