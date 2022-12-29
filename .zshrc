@@ -117,6 +117,7 @@ alias cp='cp -i'
 alias d='dirs -v'
 alias dirs='dirs -v'
 alias h=history
+alias s='save -s'
 alias killdock='killall -KILL Dock'
 alias lsa='ls -a'
 alias mv='mv -i'
