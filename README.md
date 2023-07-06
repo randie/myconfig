@@ -3,7 +3,7 @@ My Mac configuration files
 
 ### Usage
 ```
-# pre-config
+# pre-config (optional but recommended)
 mkdir /tmp/scratch
 cd /tmp/scratch
 
