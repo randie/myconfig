@@ -28,14 +28,14 @@ install_homebrew() {
 brew_install_packages() {
     install_homebrew
 
-    b=$MYCONFIG/.Brewfile
-    if [[ ! -e $b ]]
+    brewfile=$MYCONFIG/.Brewfile
+    if [[ ! -e $brewfile ]]
     then
-        echo "ERROR! $(pwd)/$b is missing"
+        echo "ERROR! $(pwd)/$brewfile is missing"
         exit 2
     fi
     
-    brew bundle install --file=$b
+    brew bundle install --file=$brewfile
     if [[ $? -ne 0 ]]
     then
         echo 'ERROR! brew bundle install did not complete successfully'
@@ -49,15 +49,6 @@ brew_install_packages() {
 #
 install_oh_my_zsh() {
     echo "WARNING! install_oh_my_zsh() is not implemented yet"
-}
-
-
-#
-# create a bare github repo to track config files
-#
-create_bare_repo() {
-    # TODO: check that clone does not already exist
-    git clone --bare $GITHUB_REPO $BARE_REPO
 }
 
 
@@ -91,6 +82,12 @@ backup_existing_config() {(
 apply_my_config() {(
     # NOTE: The parens surrounding this function is to confine its cd's locally
 
+    # create bare repo
+    git clone --bare $GITHUB_REPO $BARE_REPO
+
+    backup_existing_config
+
+    # apply my config
     cd $HOME
     git --git-dir=$BARE_REPO --work-tree=$HOME config --local status.showUntrackedFiles no
     git --git-dir=$BARE_REPO --work-tree=$HOME checkout
@@ -117,7 +114,5 @@ wrap_up() {
 
 brew_install_packages
 install_oh_my_zsh
-create_bare_repo
-backup_existing_config
 apply_my_config
 wrap_up
