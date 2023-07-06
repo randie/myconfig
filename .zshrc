@@ -136,12 +136,14 @@ alias glol='git --no-pager log --graph --pretty='\''%Cred%h%Creset -%C(auto)%d%C
 # myconfig aliases
 #
 alias c='git --no-pager --git-dir=/Users/randie/myconfig-bare --work-tree=/Users/randie'
-alias cs='git --no-pager --git-dir=/Users/randie/myconfig-bare --work-tree=/Users/randie status -s'
-alias cad='git --no-pager --git-dir=/Users/randie/myconfig-bare --work-tree=/Users/randie add'
-alias cpu='git --no-pager --git-dir=/Users/randie/myconfig-bare --work-tree=/Users/randie push'
-alias clo='git --no-pager --git-dir=/Users/randie/myconfig-bare --work-tree=/Users/randie log --oneline --decorate'
-alias clog='git --no-pager --git-dir=/Users/randie/myconfig-bare --work-tree=/Users/randie log --oneline --decorate --graph'
-alias clol='git --no-pager --git-dir=/Users/randie/myconfig-bare --work-tree=/Users/randie log --graph --pretty='\''%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset'\'
+alias ca='c add'
+alias ci='c commit'
+alias co='c checkout'
+alias cs='c status -s'
+alias cpu='c push'
+alias clo='c log --oneline --decorate'
+alias clog='c log --oneline --decorate --graph'
+alias clol='c log --graph --pretty='\''%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset'\'
 
 #
 # shell options
