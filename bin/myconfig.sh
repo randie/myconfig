@@ -95,16 +95,17 @@ apply_my_config() {(
 
 
 wrap_up() {
-    ALIAS_C="alias c=\"git --no-pager --git-dir=$BARE_REPO --work-tree=$HOME\""
-    echo
-    echo "We're done!"
-    echo
-    echo Just make sure the following alias is in your .zshrc file:
-    echo $ALIAS_C
-    echo
-    echo Now start up a new shell, and you should be good to go.
-    echo
-}
+cat << EOF
+
+    Done!
+
+    Make sure the following alias is in your .zshrc file:
+        alias c='git --no-pager --git-dir=$BARE_REPO --work-tree=$HOME'
+        Usage example: c status -s
+
+    Now start up a new shell, and you should be good to go.
+EOF
+}  
 
 #=======================#
 #                       #
@@ -112,7 +113,7 @@ wrap_up() {
 #                       #
 #=======================#
 
+apply_my_config
 brew_install_packages
 install_oh_my_zsh
-apply_my_config
 wrap_up
