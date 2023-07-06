@@ -18,4 +18,4 @@ rm -rf /tmp/scratch
 
 NOTES:
 
-1. Config files that were replaced are backed up in /tmp/scratch/myconfig-backup-*timestamp*.tar
+1. Config files that were replaced are backed up in /tmp/scratch/myconfig-backup-*timestamp*.tar. You might want to save this file somewhere else before deleting /tmp/scratch/.
