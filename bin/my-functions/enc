@@ -1,0 +1,22 @@
+#!/usr/bin/bash
+
+# Usage: enc filename
+#
+# Notes:
+# 1. You must be in the directory that contains the file to be encrypted
+
+enc() {
+    ls -l /usr/bin/bash
+    which bash
+    echo "==="
+    /usr/bin/openssl enc -aes-256-cbc -a -salt -in $1 -out x-$1
+    if (( $? == 0 ))
+    then
+        # if -shred then => mv $1 $HOME/tmp/to-shred/
+        echo ORIGINAL: $1
+        echo ENCRYPTED: x-$1
+    else
+        echo ERROR! failed to encrypt $1
+    fi
+}
+

@@ -5,11 +5,7 @@ MYCONFIG=myconfig
 GITHUB_REPO="git@github.com:randie/$MYCONFIG.git"
 BARE_REPO="$HOME/${MYCONFIG}-bare"
 
-
-#
-# install packages and apps with homebrew
-#
-brew_install_packages() {
+install_homebrew() {
     if [[ ! -x /usr/local/Homebrew/bin/brew ]]
     then
         curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
@@ -19,7 +15,13 @@ brew_install_packages() {
             exit 1
         fi
     fi
+}
 
+
+#
+# install packages and apps with homebrew
+#
+brew_install_packages() {
     b=$MYCONFIG/.Brewfile
     if [[ ! -e $b ]]
     then
@@ -78,6 +80,7 @@ backup_existing_config() {(
 #=======================#
 
 #brew_install_packages
+#install_oh_my_zsh
 create_bare_repo
 backup_existing_config
 
