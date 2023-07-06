@@ -56,7 +56,9 @@ install_oh_my_zsh() {
 # back up existing config files that will be replaced
 #
 backup_existing_config() {(
-    # NOTE: The parens surrounding this function is to confine its cd's locally
+    # NOTE: The parens enclosing this function creates a subshell
+    # and runs this function in the subshell, so cd's are confined
+    # to the subshell.
 
     if [[ -d ./$MYCONFIG/.git ]]
     then
@@ -80,7 +82,9 @@ backup_existing_config() {(
 
 
 apply_my_config() {(
-    # NOTE: The parens surrounding this function is to confine its cd's locally
+    # NOTE: The parens enclosing this function creates a subshell
+    # and runs this function in the subshell, so cd's are confined
+    # to the subshell.
 
     # create bare repo
     git clone --bare $GITHUB_REPO $BARE_REPO
