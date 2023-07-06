@@ -11,7 +11,7 @@ cd /tmp/scratch
 git clone git@github.com:randie/myconfig.git
 ./myconfig/bin/myconfig.sh
 
-# post-config (optional)
+# post-config (optional, see NOTE #1 below)
 cd
 rm -rf /tmp/scratch
 ```
