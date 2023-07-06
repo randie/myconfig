@@ -1,3 +1,8 @@
-~/myconfig
 *.swp
 .DS_Store
+.Trash
+.local
+.oh_my_zsh
+Library/
+
+~/myconfig*
