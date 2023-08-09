@@ -3,6 +3,6 @@
 .Trash
 .local
 .oh_my_zsh
-Library/
+**/*,*
 
 ~/myconfig*
