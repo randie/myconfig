@@ -74,7 +74,8 @@ backup_existing_config() {(
     
     cd $HOME
     tar cf $TMPDIR/$MYCONFIG-backup-$NOW.tar -T $TMPDIR/$MYCONFIG-files.txt
-    for f in $(< $TMPDIR/$MYCONFIG-files.txt)
+#   for f in $(< $TMPDIR/$MYCONFIG-files.txt)
+    for f in $(tar tf $TMPDIR/$MYCONFIG-backup-$NOW.tar)
     do
         [[ -e $f ]] && rm -f $f
     done
