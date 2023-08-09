@@ -144,6 +144,7 @@ alias cpu='c push'
 alias clo='c log --oneline --decorate'
 alias clog='c log --oneline --decorate --graph'
 alias clol='c log --graph --pretty='\''%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset'\'
+alias cls='c ls-tree --full-tree -r --name-only HEAD'
 
 #
 # shell options
