@@ -130,6 +130,7 @@ alias shred='rm -P'
 alias g='git --no-pager'
 alias gs='git status -s'
 alias gm='git merge --no-commit --no-ff'
+alias gci='git commit --verbose'
 alias gita='alias | grep git | grep'
 alias glol='git --no-pager log --graph --pretty='\''%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset'\'
 #
@@ -137,7 +138,7 @@ alias glol='git --no-pager log --graph --pretty='\''%Cred%h%Creset -%C(auto)%d%C
 #
 alias c='git --no-pager --git-dir=/Users/randie/myconfig-bare --work-tree=/Users/randie'
 alias ca='c add'
-alias ci='c commit'
+alias ci='c commit --verbose'
 alias co='c checkout'
 alias cs='c status -s'
 alias cpu='c push'
