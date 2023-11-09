@@ -87,10 +87,10 @@ apply_my_config() {(
     # and runs this function in the subshell, so cd's are confined
     # to the subshell.
 
-    # create bare repo
-    git clone --bare $GITHUB_REPO $BARE_REPO
-
     backup_existing_config
+
+    # create a bare repo to track $HOME
+    git clone --bare $GITHUB_REPO $BARE_REPO
 
     # apply my config
     cd $HOME
