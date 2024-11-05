@@ -117,7 +117,7 @@ alias cp='cp -i'
 alias d='dirs -v'
 alias dirs='dirs -v'
 alias h=history
-alias s='save -s'
+alias ss='save -s'
 alias killdock='killall -KILL Dock'
 alias lsa='ls -a'
 alias mv='mv -i'
@@ -164,6 +164,21 @@ setopt HIST_VERIFY
 
 # Activate autojump (an iterm2 plugin)
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
+
+# Shell integration with vscode
+[[ "$TERM_PROGRAM" == "vscode" ]] && . "$(code --locate-shell-integration-path zsh)"
+
+
+#===========================#
+#                           #
+#   Convenience Functions   #
+#                           #
+#===========================#
+
+s() {
+    echo "$HOME/save/$(date +%y%m%d)"
+}
+
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
