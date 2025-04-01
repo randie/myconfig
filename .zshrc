@@ -123,7 +123,7 @@ alias lsa='ls -a'
 alias mv='mv -i'
 alias rm='rm -i'
 #alias shred='srm -rv'
-alias shred='rm -P'
+alias sshjj='ssh -i ~/.ssh/hostgator_rsa jj@108.179.232.68 -p2222'
 #
 # git aliases
 #
@@ -133,6 +133,7 @@ alias gm='git merge --no-commit --no-ff'
 alias gci='git commit --verbose'
 alias gita='alias | grep git | grep'
 alias glol='git --no-pager log --graph --pretty='\''%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset'\'
+savepy='gs | grep py | grep " M" | cut -d " "  -f3 | xargs save -s'
 #
 # myconfig aliases
 #
@@ -179,6 +180,34 @@ s() {
     echo "$HOME/save/$(date +%y%m%d)"
 }
 
+shred() {
+  if [[ -z "$1" ]]; then
+    echo "Usage: shred <filename>"
+    return 1
+  fi
+
+  local file="$1"
+
+  if [[ ! -f "$file" ]]; then
+    echo "ERROR! '$file' is not a valid file."
+    return 1
+  fi
+
+  local file_size=$(stat -f%z "$file")
+  local block_count=$((($file_size + 1048575) / 1048576))
+
+  dd if=/dev/urandom of="$file" bs=1m count="$block_count" status=progress 2>/dev/null
+  \rm -f "$file"
+
+  echo "Poof! $file is gone."
+}
+
+
+#====================#
+#                    #
+#   Anaconda Stuff   #
+#                    #
+#====================#
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
