@@ -83,6 +83,7 @@ plugins=(autojump git zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
+
 #==========================#
 #                          #
 #    User configuration    #
@@ -167,8 +168,8 @@ setopt HIST_VERIFY
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 
 # Shell integration with vscode
-[[ "$TERM_PROGRAM" == "vscode" ]] && . "$(code --locate-shell-integration-path zsh)"
-
+#[[ "$TERM_PROGRAM" == "vscode" ]] && . "$(code --locate-shell-integration-path zsh)"
+[[ "$TERM_PROGRAM" == "vscode" ]] && . "$(/usr/local/bin/code --locate-shell-integration-path zsh)"
 
 #===========================#
 #                           #
@@ -202,6 +203,12 @@ shred() {
   echo "Poof! $file is gone."
 }
 
+dc() {
+  local cmd="$1"
+  shift
+  echo "╰─❯ docker-compose --env-file docker-compose.env ${cmd} --remove-orphans --build $@"
+  docker-compose --env-file docker-compose.env "$cmd" --remove-orphans --build "$@"
+}
 
 #====================#
 #                    #
