@@ -210,6 +210,11 @@ dc() {
   docker-compose --env-file docker-compose.env "$cmd" --remove-orphans --build "$@"
 }
 
+dcsh() {
+  echo "╰─❯ docker-compose --env-file docker-compose.env exec ${1} /bin/bash"
+  docker-compose --env-file docker-compose.env exec ${1} /bin/bash
+}
+
 #====================#
 #                    #
 #   Anaconda Stuff   #
