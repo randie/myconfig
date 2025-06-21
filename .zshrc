@@ -79,7 +79,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 #plugins=(autojump git zsh-autosuggestions zsh-syntax-highlighting)
-plugins=(autojump git zsh-syntax-highlighting)
+plugins=(autojump direnv git zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -215,6 +215,15 @@ dcsh() {
   docker-compose --env-file docker-compose.env exec ${1} /bin/bash
 }
 
+#==============#
+#              #
+#   Projects   #
+#              #
+#==============#
+
+source $HOME/projects/sidetrader/bin/projectrc
+
+
 #====================#
 #                    #
 #   Anaconda Stuff   #
@@ -235,4 +244,3 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
-
