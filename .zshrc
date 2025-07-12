@@ -167,9 +167,21 @@ setopt HIST_VERIFY
 # Activate autojump (an iterm2 plugin)
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 
+# Hook up direnv to zsh so zsh lets direnv modify the environment
+# when you cd to a directory that has a .envrc file
+eval "$(direnv hook zsh)"
+
 # Shell integration with vscode
-#[[ "$TERM_PROGRAM" == "vscode" ]] && . "$(code --locate-shell-integration-path zsh)"
 [[ "$TERM_PROGRAM" == "vscode" ]] && . "$(/usr/local/bin/code --locate-shell-integration-path zsh)"
+
+#==============#
+#              #
+#   Projects   #
+#              #
+#==============#
+
+#source $HOME/projects/sidetrader/bin/projectrc
+#source $HOME/projects/rb-micromamba/bin/projectrc
 
 #===========================#
 #                           #
@@ -214,15 +226,6 @@ dcsh() {
   echo "╰─❯ docker-compose --env-file docker-compose.env exec ${1} /bin/bash"
   docker-compose --env-file docker-compose.env exec ${1} /bin/bash
 }
-
-#==============#
-#              #
-#   Projects   #
-#              #
-#==============#
-
-source $HOME/projects/sidetrader/bin/projectrc
-
 
 #====================#
 #                    #

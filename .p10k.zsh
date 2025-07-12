@@ -51,7 +51,8 @@
     background_jobs         # presence of background jobs
     direnv                  # direnv status (https://direnv.net/)
     asdf                    # asdf version manager (https://github.com/asdf-vm/asdf)
-    virtualenv              # python virtual environment (https://docs.python.org/3/library/venv.html)
+    # virtualenv            # python virtual environment (https://docs.python.org/3/library/venv.html)
+    my_venv_icon            # custom venv icon
     anaconda                # conda environment (https://conda.io/)
     pyenv                   # python environment (https://github.com/pyenv/pyenv)
     goenv                   # go environment (https://github.com/syndbg/goenv)
@@ -888,6 +889,8 @@
   # typeset -g POWERLEVEL9K_CONTEXT_PREFIX='%fwith '
 
   ###[ virtualenv: python virtual environment (https://docs.python.org/3/library/venv.html) ]###
+  # Show the actual name of the virtual environment even if it's the generic .venv or venv
+  typeset -g POWERLEVEL9K_VIRTUALENV_SHOW_WITH_GENERIC_NAMES=true
   # Python virtual environment color.
   typeset -g POWERLEVEL9K_VIRTUALENV_FOREGROUND=37
   # Don't show Python version next to the virtual environment name.
@@ -899,6 +902,8 @@
   typeset -g POWERLEVEL9K_VIRTUALENV_{LEFT,RIGHT}_DELIMITER=
   # Custom icon.
   # typeset -g POWERLEVEL9K_VIRTUALENV_VISUAL_IDENTIFIER_EXPANSION='⭐'
+  # Hide the venv name, show only the icon
+  typeset -g POWERLEVEL9K_VIRTUALENV_HIDE_NAME=true
 
   #####################[ anaconda: conda environment (https://conda.io/) ]######################
   # Anaconda environment color.
@@ -1646,3 +1651,11 @@ typeset -g POWERLEVEL9K_CONFIG_FILE=${${(%):-%x}:a}
 
 (( ${#p10k_config_opts} )) && setopt ${p10k_config_opts[@]}
 'builtin' 'unset' 'p10k_config_opts'
+
+#---------------------------
+# Customize prompt segments
+#---------------------------
+
+function prompt_my_venv_icon() {
+  [[ -n $VIRTUAL_ENV ]] && p10k segment -i '▼' -f 34
+}
