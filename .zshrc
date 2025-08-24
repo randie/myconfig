@@ -118,6 +118,7 @@ alias cp='cp -i'
 alias d='dirs -v'
 alias dirs='dirs -v'
 alias h=history
+alias hn='scutil --get LocalHostName'
 alias ss='save -s'
 alias killdock='killall -KILL Dock'
 alias lsa='ls -a'
